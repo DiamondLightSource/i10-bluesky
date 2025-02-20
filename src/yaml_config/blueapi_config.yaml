@@ -1,0 +1,20 @@
+---
+stomp:
+  host: "localhost"
+  port: 61613
+  auth:
+    username: "guest"
+    password: "guest"
+
+env:
+  sources:
+    # - kind: deviceFunctions
+    #   module: blueapi.startup.example_devices
+    - kind: deviceFunctions
+      module: "dodal.beamlines.i10"
+    - kind: planFunctions
+      module: "i10_bluesky.plans.utils.alignments"
+    - kind: planFunctions
+      module: "i10_bluesky.plans.align_slits"
+  events:
+    broadcast_status_events: True
