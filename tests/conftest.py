@@ -5,10 +5,10 @@ import pytest
 from bluesky.run_engine import RunEngine
 from dodal.utils import make_all_devices
 from ophyd_async.core import (
-    DeviceCollector,
     FilenameProvider,
     StaticFilenameProvider,
     StaticPathProvider,
+    init_devices,
 )
 from ophyd_async.testing import set_mock_value
 from p99_bluesky.devices.stages import ThreeAxisStage
@@ -73,7 +73,7 @@ def static_path_provider(
 
 @pytest.fixture
 async def sim_motor():
-    async with DeviceCollector(mock=True):
+    async with init_devices(mock=True):
         sim_motor = ThreeAxisStage("BLxxI-MO-TABLE-01:X", name="sim_motor")
     set_mock_value(sim_motor.x.velocity, 2.78)
     set_mock_value(sim_motor.x.high_limit_travel, 8.168)
@@ -106,7 +106,7 @@ async def sim_motor():
 
 @pytest.fixture
 async def sim_motor_step():
-    async with DeviceCollector(mock=True):
+    async with init_devices(mock=True):
         sim_motor_step = SimThreeAxisStage(name="sim_motor_step", instant=True)
 
     yield sim_motor_step
@@ -114,7 +114,7 @@ async def sim_motor_step():
 
 @pytest.fixture
 async def fake_detector():
-    async with DeviceCollector(mock=True):
+    async with init_devices(mock=True):
         fake_detector = sim_detector(prefix="fake_Pv", name="fake_detector")
     set_mock_value(fake_detector.value, 0)
     yield fake_detector
