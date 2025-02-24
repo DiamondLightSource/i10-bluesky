@@ -6,8 +6,9 @@ from bluesky import preprocessors as bpp
 from bluesky.callbacks.fitting import PeakStats
 from bluesky.plan_stubs import abs_set, read
 from bluesky.plans import scan
+from bluesky.protocols import Movable
 from dodal.common.types import MsgGenerator
-from ophyd_async.core import StandardReadable
+from ophyd_async.core import Device, StandardReadable
 from ophyd_async.epics.motor import Motor
 from p99_bluesky.plans.fast_scan import fast_scan_1d
 
@@ -39,45 +40,46 @@ class PeakPosition(tuple, Enum):
 TCallable = TypeVar("TCallable", bound=Callable)
 
 
-def scan_and_move_cen(funcs: TCallable) -> TCallable:
+class MoveableDevice(Device, Movable): ...
+
+
+def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
     """Wrapper to add PeakStats call back before performing scan
     and move to the fitted position after scan"""
 
-    def inner(**kwargs):
-        # Add default value if they are None or missing.
-        if "motor_name" not in kwargs or kwargs["motor_name"] is None:
-            kwargs["motor_name"] = "-user_readback"
-        if "det_name" not in kwargs or kwargs["det_name"] is None:
-            kwargs["det_name"] = "-value"
-        if "loc" not in kwargs or kwargs["loc"] is None:
-            kwargs["loc"] = PeakPosition.CEN
+    def inner(
+        det: StandardReadable,
+        motor: MoveableDevice,
+        start: float,
+        end: float,
+        loc: PeakPosition,
+        **kwarg,
+    ):
         ps = PeakStats(
-            f"{kwargs['motor'].name}{kwargs['motor_name']}",
-            f"{kwargs['det'].name}{kwargs['det_name']}",
+            f"{motor.name}-user_readback",
+            f"{det.name}-value",
             calc_derivative_and_stats=True,
         )
         yield from bpp.subs_wrapper(
-            funcs(**kwargs),
+            funcs(det, motor, start, end, loc, **kwarg),
             ps,
         )
-        peak_position = get_stat_loc(ps, kwargs["loc"])
+        peak_position = get_stat_loc(ps, loc)
 
         LOGGER.info(f"Fit info {ps}")
-        yield from abs_set(kwargs["motor"], peak_position, wait=True)
+        yield from abs_set(motor, peak_position, wait=True)
 
     return cast(TCallable, inner)
 
 
-@scan_and_move_cen
-def step_scan_and_move_cen(
+@scan_and_move_to_fit_pos
+def step_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
     start: float,
     end: float,
+    loc: PeakPosition,
     num: int,
-    motor_name: str | None = None,
-    det_name: str | None = None,
-    loc: PeakPosition | None = None,
 ) -> MsgGenerator:
     """Does a step scan and move to the fitted position
        Parameters
@@ -99,21 +101,17 @@ def step_scan_and_move_cen(
     loc: PeakPosition | None = None,
         Which fitted position to move to see PeakPosition
     """
-    LOGGER.info(
-        f"Step scanning {motor}{motor_name} with {det}{det_name} pro-scan move to {loc}"
-    )
+    LOGGER.info(f"Step scanning {motor.name} with {det.name} pro-scan move to {loc}")
     return scan([det], motor, start, end, num=num)
 
 
-@scan_and_move_cen
-def fast_scan_and_move_cen(
+@scan_and_move_to_fit_pos
+def fast_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
     start: float,
     end: float,
-    motor_name: str,
-    det_name: str | None = None,
-    loc: PeakPosition | None = None,
+    loc: PeakPosition,
     motor_speed: float | None = None,
 ) -> MsgGenerator:
     """Does a fast non-stopping scan and move to the fitted position
@@ -136,22 +134,22 @@ def fast_scan_and_move_cen(
     motor_speed: float | None = None,
         Speed of the motor.
     """
-    LOGGER.info(
-        f"Fast scaning {motor}{motor_name} with {det}{det_name} pro-scan move to {loc}"
-    )
+    LOGGER.info(f"Fast scaning {motor.hints} with {det.hints} pro-scan move to {loc}")
     return fast_scan_1d([det], motor, start, end, motor_speed=motor_speed)
 
 
 def get_stat_loc(ps: PeakStats, loc: PeakPosition) -> float:
     """Helper to check the fit was done correctly and
     return requested stats position (peak position)."""
-    stat = getattr(ps, loc.value[0])
-    if not stat:
+    peak_stat = ps[loc.value[0]]
+    if not peak_stat:
         raise ValueError("Fitting failed, check devices name are correct.")
-    elif not stat.fwhm:
+    stat = ps[loc.value[0]]._asdict()
+    print(stat)
+    if not stat["fwhm"]:
         raise ValueError("Fitting failed, no peak within scan range.")
 
-    stat_pos = getattr(stat, loc.value[1])
+    stat_pos = stat[loc.value[1]]
     return stat_pos if isinstance(stat_pos, float) else stat_pos[0]
 
 
@@ -160,9 +158,7 @@ def align_slit_with_look_up(
     size: float,
     slit_table: dict[str, float],
     det: StandardReadable,
-    det_name: str | None = None,
-    motor_name: str | None = None,
-    centre_type: PeakPosition | None = None,
+    centre_type: PeakPosition,
 ) -> MsgGenerator:
     """Perform a step scan with the the range and starting motor position
       given/calculated by using a look up table(dictionary).
@@ -192,15 +188,13 @@ def align_slit_with_look_up(
         )
     else:
         raise ValueError(f"Size of {size} is not in {slit_table.keys}")
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=motor,
         start=start_pos,
         end=end_pos,
-        num=num,
-        det_name=det_name,
-        motor_name=motor_name,
         loc=centre_type,
+        num=num,
     )
     temp = yield from read(motor.user_readback)
     slit_table[str(size)] = temp[motor.name + "-user_readback"]["value"]

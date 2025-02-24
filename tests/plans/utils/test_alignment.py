@@ -10,8 +10,8 @@ from p99_bluesky.devices.stages import ThreeAxisStage
 from i10_bluesky.plans.utils import (
     PeakPosition,
     align_slit_with_look_up,
-    fast_scan_and_move_cen,
-    step_scan_and_move_cen,
+    fast_scan_and_move_fit,
+    step_scan_and_move_fit,
 )
 from i10_bluesky.plans.utils.helpers import cal_range_num
 from sim_devices import sim_detector
@@ -74,11 +74,12 @@ async def test_scan_and_move_cen_success_with_default_value_gaussain(
     )
     docs = defaultdict(list)
     RE(
-        step_scan_and_move_cen(
+        step_scan_and_move_fit(
             det=fake_detector,
             motor=sim_motor_step.x,
             start=start,
             end=end,
+            loc=PeakPosition.COM,
             num=num,
         ),
         capture_emitted,
@@ -89,7 +90,7 @@ async def test_scan_and_move_cen_success_with_default_value_gaussain(
         y_data1 = np.append(y_data1, i["data"]["fake_detector-value"])
         x_data1 = np.append(x_data1, i["data"]["sim_motor_step-x-user_readback"])
     assert await sim_motor_step.x.user_setpoint.get_value() == pytest.approx(
-        expected_centre, 0.05
+        expected_centre, 0.01
     )
 
 
@@ -135,7 +136,7 @@ async def test_scan_and_move_cen_success_with_default_value_step(
     )
     docs = defaultdict(list)
     RE(
-        step_scan_and_move_cen(
+        step_scan_and_move_fit(
             det=fake_detector,
             motor=sim_motor_step.x,
             start=start,
@@ -167,16 +168,16 @@ async def test_scan_and_move_cen_fail_to_with_wrong_name(
         sim_motor_step.x.user_setpoint,
         lambda *_, **__: set_mock_value(fake_detector.value, value=rbv_mocks.get()),
     )
+    sim_motor_step.x._name = " "
     with pytest.raises(ValueError) as e:
         RE(
-            fast_scan_and_move_cen(
+            fast_scan_and_move_fit(
                 det=fake_detector,
                 motor=sim_motor_step.x,
                 start=-5,
                 end=5,
-                motor_speed=100,
-                motor_name="wrong_name",
                 loc=PeakPosition.CEN,
+                motor_speed=100,
             ),
             capture_emitted,
         )
@@ -219,14 +220,12 @@ async def test_scan_and_move_cen_failed_with_no_peak_in_range(
     )
     with pytest.raises(ValueError) as e:
         RE(
-            step_scan_and_move_cen(
+            step_scan_and_move_fit(
                 det=fake_detector,
                 motor=sim_motor_step.x,
                 start=start,
                 end=end,
                 num=num,
-                motor_name="-user_readback",
-                det_name="-value",
                 loc=PeakPosition.CEN,
             ),
         )
@@ -276,6 +275,7 @@ async def test_align_slit_with_look_up(
             size=size,
             slit_table=FAKEDSU,
             det=fake_detector,
+            centre_type=PeakPosition.COM,
         ),
         capture_emitted,
     )
@@ -300,6 +300,7 @@ async def test_align_slit_with_look_up_fail_wrong_key(
                 size=size,
                 slit_table=FAKEDSU,
                 det=fake_detector,
+                centre_type=PeakPosition.CEN,
             ),
         )
     assert str(e.value) == f"Size of {size} is not in {FAKEDSU.keys}"

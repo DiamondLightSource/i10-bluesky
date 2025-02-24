@@ -18,7 +18,7 @@ from i10_bluesky.plans.utils import (
     align_slit_with_look_up,
     cal_range_num,
     move_motor_with_look_up,
-    step_scan_and_move_cen,
+    step_scan_and_move_fit,
 )
 
 """I10 has fix/solid slit on a motor, this store the rough motor opening
@@ -75,7 +75,6 @@ def align_dsu(
         size=size,
         slit_table=DSU,
         det=det,
-        det_name=det_name,
         centre_type=PeakPosition.COM,
     )
 
@@ -90,7 +89,6 @@ def align_dsd(
         size=size,
         slit_table=DSD,
         det=det,
-        det_name=det_name,
         centre_type=PeakPosition.COM,
     )
 
@@ -221,15 +219,13 @@ def align_slit(
     yield from wait(group=group_wait)
     yield from mv(slit.y_centre, y_cen, group=group_wait)  # type: ignore
     start_pos, end_pos, num = cal_range_num(x_cen, x_range, x_scan_size)
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=slit.x_centre,
         start=start_pos,
         end=end_pos,
-        num=num,
-        det_name=det_name,
-        motor_name=motor_name,
         loc=centre_type,
+        num=num,
     )
 
     yield from abs_set(slit.y_gap, y_scan_size, group=group_wait)
@@ -237,14 +233,13 @@ def align_slit(
     LOGGER.info(f"Moving to starting position for {slit.y_centre.name} alignment.")
     yield from wait(group=group_wait)
     start_pos, end_pos, num = cal_range_num(y_cen, y_range, y_scan_size)
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=slit.y_centre,
         start=start_pos,
         end=end_pos,
-        num=num,
-        det_name=det_name,
         loc=centre_type,
+        num=num,
     )
     yield from abs_set(slit.x_gap, x_final_size, group=group_wait)
     yield from abs_set(slit.y_gap, y_final_size, group=group_wait)
