@@ -14,7 +14,7 @@ from ophyd_async.core import StandardReadable
 
 from i10_bluesky.log import LOGGER
 from i10_bluesky.plans.utils import (
-    PeakPosition,
+    StatPosition,
     align_slit_with_look_up,
     cal_range_num,
     move_motor_with_look_up,
@@ -75,7 +75,7 @@ def align_dsu(
         size=size,
         slit_table=DSU,
         det=det,
-        centre_type=PeakPosition.COM,
+        centre_type=StatPosition.COM,
     )
 
 
@@ -89,7 +89,7 @@ def align_dsd(
         size=size,
         slit_table=DSD,
         det=det,
-        centre_type=PeakPosition.COM,
+        centre_type=StatPosition.COM,
     )
 
 
@@ -169,7 +169,7 @@ def align_slit(
     y_cen: float,
     det_name: str | None = None,
     motor_name: str | None = "",
-    centre_type: PeakPosition = PeakPosition.COM,
+    centre_type: StatPosition = StatPosition.COM,
 ):
     """
     Plan to align a pair of standard x-y slits,
@@ -208,9 +208,9 @@ def align_slit(
         It only add to the last part of the detector name if/when required.
     motor_name: str | None = "",
         The name of the motor, same as det_name.
-    centre_type: PeakPosition = PeakPosition.COM
+    centre_type: StatPosition = StatPosition.COM
         Where to move the slits, it goes to centre of mass by default.
-        see PeakPosition for other options.
+        see StatPosition for other options.
     """
     group_wait = "slits group"
     yield from abs_set(slit.x_gap, x_scan_size, group=group_wait)
@@ -224,7 +224,7 @@ def align_slit(
         motor=slit.x_centre,
         start=start_pos,
         end=end_pos,
-        loc=centre_type,
+        fitted_loc=centre_type,
         num=num,
     )
 
@@ -238,7 +238,7 @@ def align_slit(
         motor=slit.y_centre,
         start=start_pos,
         end=end_pos,
-        loc=centre_type,
+        fitted_loc=centre_type,
         num=num,
     )
     yield from abs_set(slit.x_gap, x_final_size, group=group_wait)

@@ -8,7 +8,7 @@ from ophyd_async.testing import callback_on_mock_put, set_mock_value
 from p99_bluesky.devices.stages import ThreeAxisStage
 
 from i10_bluesky.plans.utils import (
-    PeakPosition,
+    StatPosition,
     align_slit_with_look_up,
     fast_scan_and_move_fit,
     step_scan_and_move_fit,
@@ -48,7 +48,7 @@ def gaussian(x, mu, sig):
         ),
     ],
 )
-async def test_scan_and_move_cen_success_with_default_value_gaussain(
+async def test_scan_and_move_cen_success_with_gaussian(
     RE: RunEngine,
     sim_motor_step: ThreeAxisStage,
     fake_detector: sim_detector,
@@ -75,12 +75,12 @@ async def test_scan_and_move_cen_success_with_default_value_gaussain(
     docs = defaultdict(list)
     RE(
         step_scan_and_move_fit(
-            det=fake_detector,
-            motor=sim_motor_step.x,
-            start=start,
-            end=end,
-            loc=PeakPosition.COM,
-            num=num,
+            fake_detector,
+            sim_motor_step.x,
+            StatPosition.COM,
+            start,
+            end,
+            num,
         ),
         capture_emitted,
     )
@@ -111,7 +111,7 @@ def step_function(x_data, step_centre):
         ),
     ],
 )
-async def test_scan_and_move_cen_success_with_default_value_step(
+async def test_scan_and_move_cen_success_with_step(
     RE: RunEngine,
     sim_motor_step: ThreeAxisStage,
     fake_detector: sim_detector,
@@ -142,7 +142,7 @@ async def test_scan_and_move_cen_success_with_default_value_step(
             start=start,
             end=end,
             num=num,
-            loc=PeakPosition.D_CEN,
+            fitted_loc=StatPosition.D_CEN,
         ),
         capture_emitted,
     )
@@ -176,7 +176,7 @@ async def test_scan_and_move_cen_fail_to_with_wrong_name(
                 motor=sim_motor_step.x,
                 start=-5,
                 end=5,
-                loc=PeakPosition.CEN,
+                fitted_loc=StatPosition.CEN,
                 motor_speed=100,
             ),
             capture_emitted,
@@ -225,8 +225,8 @@ async def test_scan_and_move_cen_failed_with_no_peak_in_range(
                 motor=sim_motor_step.x,
                 start=start,
                 end=end,
+                fitted_loc=StatPosition.CEN,
                 num=num,
-                loc=PeakPosition.CEN,
             ),
         )
     assert str(e.value) == "Fitting failed, no peak within scan range."
@@ -275,7 +275,7 @@ async def test_align_slit_with_look_up(
             size=size,
             slit_table=FAKEDSU,
             det=fake_detector,
-            centre_type=PeakPosition.COM,
+            centre_type=StatPosition.COM,
         ),
         capture_emitted,
     )
@@ -300,7 +300,7 @@ async def test_align_slit_with_look_up_fail_wrong_key(
                 size=size,
                 slit_table=FAKEDSU,
                 det=fake_detector,
-                centre_type=PeakPosition.CEN,
+                centre_type=StatPosition.CEN,
             ),
         )
     assert str(e.value) == f"Size of {size} is not in {FAKEDSU.keys}"

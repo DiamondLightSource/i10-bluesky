@@ -6,9 +6,8 @@ from bluesky import preprocessors as bpp
 from bluesky.callbacks.fitting import PeakStats
 from bluesky.plan_stubs import abs_set, read
 from bluesky.plans import scan
-from bluesky.protocols import Movable
 from dodal.common.types import MsgGenerator
-from ophyd_async.core import Device, StandardReadable
+from ophyd_async.core import StandardReadable
 from ophyd_async.epics.motor import Motor
 from p99_bluesky.plans.fast_scan import fast_scan_1d
 
@@ -17,7 +16,7 @@ from i10_bluesky.plans.utils.helpers import cal_range_num
 from i10_bluesky.plans.utils.motors import MotorTable
 
 
-class PeakPosition(tuple, Enum):
+class StatPosition(tuple, Enum):
     """
     Data table to help access the fit data.
     Com: Centre of mass
@@ -40,20 +39,30 @@ class PeakPosition(tuple, Enum):
 TCallable = TypeVar("TCallable", bound=Callable)
 
 
-class MoveableDevice(Device, Movable): ...
-
-
 def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
     """Wrapper to add PeakStats call back before performing scan
-    and move to the fitted position after scan"""
+    and move to the fitted position after scan.
+
+    Parameters
+    ----------
+    det: StandardReadable,
+        Detector to be use for alignment.
+    motor: Motor
+        Motor devices that is being centre.
+    fitted_loc: StatPosition | None = None,
+        Which fitted position to move to see StatPosition
+    args:
+        Other arguments the wrapped scan need to function.
+    kwargs:
+        Other keyword arguments the wrapped scan need to function.
+    """
 
     def inner(
         det: StandardReadable,
-        motor: MoveableDevice,
-        start: float,
-        end: float,
-        loc: PeakPosition,
-        **kwarg,
+        motor: Motor,
+        fitted_loc: StatPosition,
+        *args,
+        **kwargs,
     ):
         ps = PeakStats(
             f"{motor.name}-user_readback",
@@ -61,10 +70,10 @@ def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
             calc_derivative_and_stats=True,
         )
         yield from bpp.subs_wrapper(
-            funcs(det, motor, start, end, loc, **kwarg),
+            funcs(det, motor, fitted_loc, *args, **kwargs),
             ps,
         )
-        peak_position = get_stat_loc(ps, loc)
+        peak_position = get_stat_loc(ps, fitted_loc)
 
         LOGGER.info(f"Fit info {ps}")
         yield from abs_set(motor, peak_position, wait=True)
@@ -76,32 +85,30 @@ def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
 def step_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
+    fitted_loc: StatPosition,
     start: float,
     end: float,
-    loc: PeakPosition,
     num: int,
 ) -> MsgGenerator:
     """Does a step scan and move to the fitted position
-       Parameters
+    Parameters
     ----------
     det: StandardReadable,
         Detector to be use for alignment.
     motor: Motor
         Motor devices that is being centre.
+    fitted_loc: StatPosition | None = None,
+        Which fitted position to move to see StatPosition
     start: float,
         Starting position for the scan.
     end: float,
         Ending position for the scan.
     num:int
         Number of step.
-    motor_name: str | None = None,
-        Name extension for the motor.
-    det_name: str | None = None,
-        Name extension for the det.
-    loc: PeakPosition | None = None,
-        Which fitted position to move to see PeakPosition
     """
-    LOGGER.info(f"Step scanning {motor.name} with {det.name} pro-scan move to {loc}")
+    LOGGER.info(
+        f"Step scanning {motor.name} with {det.name} pro-scan move to {fitted_loc}"
+    )
     return scan([det], motor, start, end, num=num)
 
 
@@ -109,9 +116,9 @@ def step_scan_and_move_fit(
 def fast_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
+    fitted_loc: StatPosition,
     start: float,
     end: float,
-    loc: PeakPosition,
     motor_speed: float | None = None,
 ) -> MsgGenerator:
     """Does a fast non-stopping scan and move to the fitted position
@@ -121,35 +128,35 @@ def fast_scan_and_move_fit(
         Detector to be use for alignment.
     motor: Motor
         Motor devices that is being centre.
+    fitted_loc: StatPosition
+        Which fitted position to move to see StatPosition.
     start: float,
         Starting position for the scan.
     end: float,
         Ending position for the scan.
-    det_name: str | None = None,
-        Name extension for the det.
-    motor_name: str | None = None,
-        Name extension for the motor.
-    loc: PeakPosition | None = None,
-        Which fitted position to move to see PeakPosition.
     motor_speed: float | None = None,
         Speed of the motor.
     """
-    LOGGER.info(f"Fast scaning {motor.hints} with {det.hints} pro-scan move to {loc}")
-    return fast_scan_1d([det], motor, start, end, motor_speed=motor_speed)
+    LOGGER.info(
+        f"Fast scaning {motor.hints} with {det.hints} pro-scan move to {fitted_loc}"
+    )
+    return fast_scan_1d(
+        dets=[det], motor=motor, start=start, end=end, motor_speed=motor_speed
+    )
 
 
-def get_stat_loc(ps: PeakStats, loc: PeakPosition) -> float:
+def get_stat_loc(ps: PeakStats, loc: StatPosition) -> float:
     """Helper to check the fit was done correctly and
-    return requested stats position (peak position)."""
+    return requested stats position."""
     peak_stat = ps[loc.value[0]]
     if not peak_stat:
         raise ValueError("Fitting failed, check devices name are correct.")
-    stat = ps[loc.value[0]]._asdict()
-    print(stat)
-    if not stat["fwhm"]:
+    peak_stat = peak_stat._asdict()
+
+    if not peak_stat["fwhm"]:
         raise ValueError("Fitting failed, no peak within scan range.")
 
-    stat_pos = stat[loc.value[1]]
+    stat_pos = peak_stat[loc.value[1]]
     return stat_pos if isinstance(stat_pos, float) else stat_pos[0]
 
 
@@ -158,7 +165,7 @@ def align_slit_with_look_up(
     size: float,
     slit_table: dict[str, float],
     det: StandardReadable,
-    centre_type: PeakPosition,
+    centre_type: StatPosition,
 ) -> MsgGenerator:
     """Perform a step scan with the the range and starting motor position
       given/calculated by using a look up table(dictionary).
@@ -174,12 +181,8 @@ def align_slit_with_look_up(
         the slit in um.
     det: StandardReadable,
         Detector to be use for alignment.
-    det_name: str | None = None,
-        Name extension for the det.
-    motor_name: str | None = None,
-        Name extension for the motor.
-    centre_type: PeakPosition | None = None,
-        Which fitted position to move to see PeakPosition.
+    centre_type: StatPosition
+        Which fitted position to move to see StatPosition.
     """
     MotorTable.model_validate(slit_table)
     if str(int(size)) in slit_table:
@@ -193,7 +196,7 @@ def align_slit_with_look_up(
         motor=motor,
         start=start_pos,
         end=end_pos,
-        loc=centre_type,
+        fitted_loc=centre_type,
         num=num,
     )
     temp = yield from read(motor.user_readback)
