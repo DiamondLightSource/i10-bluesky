@@ -115,6 +115,9 @@ def align_s5s6(
         Name of the detector for fitting only requires.
     """
 
+    if det is None:
+        det, _ = get_rasor_default_det()
+
     slit = slits()
     yield from move_to_direct_beam_position()
 
