@@ -143,7 +143,7 @@ def check_msg_wait(msgs, wait_group, wait=False):
     wait_msg = (
         {"group": wait_group}
         if wait
-        else {"group": wait_group, "move_on": False, "timeout": None}
+        else {"group": wait_group, "error_on_timeout": True, "timeout": None}
     )
     return assert_message_and_return_remaining(
         msgs,

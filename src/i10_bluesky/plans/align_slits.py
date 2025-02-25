@@ -115,9 +115,6 @@ def align_s5s6(
         Name of the detector for fitting only requires.
     """
 
-    if det is None:
-        det, det_name = get_rasor_default_det()
-
     slit = slits()
     yield from move_to_direct_beam_position()
 
@@ -134,7 +131,6 @@ def align_s5s6(
         y_open_size=4,
         y_range=2,
         y_cen=0,
-        det_name=det_name,
     )
     LOGGER.info("Aligning s6")
     yield from align_slit(
@@ -150,7 +146,6 @@ def align_s5s6(
         y_open_size=4,
         y_range=2,
         y_cen=0,
-        det_name=det_name,
     )
 
 
@@ -167,8 +162,6 @@ def align_slit(
     x_cen: float,
     y_range: float,
     y_cen: float,
-    det_name: str | None = None,
-    motor_name: str | None = "",
     centre_type: StatPosition = StatPosition.COM,
 ):
     """
