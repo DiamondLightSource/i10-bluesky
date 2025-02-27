@@ -138,7 +138,7 @@ def fast_scan_and_move_fit(
         Speed of the motor.
     """
     LOGGER.info(
-        f"Fast scaning {motor.hints} with {det.hints} pro-scan move to {fitted_loc}"
+        f"Fast scanning {motor.hints} with {det.hints} pro-scan move to {fitted_loc}"
     )
     return fast_scan_1d(
         dets=[det], motor=motor, start=start, end=end, motor_speed=motor_speed
