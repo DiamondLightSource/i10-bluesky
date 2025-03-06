@@ -51,6 +51,8 @@ def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
         Motor devices that is being centre.
     fitted_loc: StatPosition | None = None,
         Which fitted position to move to see StatPosition
+    detname_suffix: Str
+        Name of the fitted axis within the detector
     args:
         Other arguments the wrapped scan need to function.
     kwargs:
@@ -61,16 +63,17 @@ def scan_and_move_to_fit_pos(funcs: TCallable) -> TCallable:
         det: StandardReadable,
         motor: Motor,
         fitted_loc: StatPosition,
+        detname_suffix: str,
         *args,
         **kwargs,
     ):
         ps = PeakStats(
             f"{motor.name}-user_readback",
-            f"{det.name}-value",
+            f"{det.name}-{detname_suffix}",
             calc_derivative_and_stats=True,
         )
         yield from bpp.subs_wrapper(
-            funcs(det, motor, fitted_loc, *args, **kwargs),
+            funcs(det, motor, fitted_loc, detname_suffix, *args, **kwargs),
             ps,
         )
         peak_position = get_stat_loc(ps, fitted_loc)
@@ -86,6 +89,7 @@ def step_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
     fitted_loc: StatPosition,
+    detname_suffix: str,
     start: float,
     end: float,
     num: int,
@@ -99,6 +103,8 @@ def step_scan_and_move_fit(
         Motor devices that is being centre.
     fitted_loc: StatPosition | None = None,
         Which fitted position to move to see StatPosition
+    detname_suffix: Str
+        Name of the fitted axis within the detector
     start: float,
         Starting position for the scan.
     end: float,
@@ -107,7 +113,8 @@ def step_scan_and_move_fit(
         Number of step.
     """
     LOGGER.info(
-        f"Step scanning {motor.name} with {det.name} pro-scan move to {fitted_loc}"
+        f"Step scanning {motor.name} with {det.name}-{detname_suffix}\
+            pro-scan move to {fitted_loc}"
     )
     return scan([det], motor, start, end, num=num)
 
@@ -117,6 +124,7 @@ def fast_scan_and_move_fit(
     det: StandardReadable,
     motor: Motor,
     fitted_loc: StatPosition,
+    detname_suffix: str,
     start: float,
     end: float,
     motor_speed: float | None = None,
@@ -130,6 +138,8 @@ def fast_scan_and_move_fit(
         Motor devices that is being centre.
     fitted_loc: StatPosition
         Which fitted position to move to see StatPosition.
+    detname_suffix: Str
+        Name of the fitted axis within the detector
     start: float,
         Starting position for the scan.
     end: float,
@@ -138,7 +148,8 @@ def fast_scan_and_move_fit(
         Speed of the motor.
     """
     LOGGER.info(
-        f"Fast scanning {motor.hints} with {det.hints} pro-scan move to {fitted_loc}"
+        f"Fast scanning {motor.hints} with {det.name}-{detname_suffix}\
+              pro-scan move to {fitted_loc}"
     )
     return fast_scan_1d(
         dets=[det], motor=motor, start=start, end=end, motor_speed=motor_speed
@@ -195,6 +206,7 @@ def align_slit_with_look_up(
         det=det,
         motor=motor,
         start=start_pos,
+        detname_suffix="value",
         end=end_pos,
         fitted_loc=centre_type,
         num=num,

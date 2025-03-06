@@ -209,6 +209,7 @@ def align_slit(
     yield from step_scan_and_move_fit(
         det=det,
         motor=slit.x_centre,
+        detname_suffix="value",
         start=start_pos,
         end=end_pos,
         fitted_loc=centre_type,
@@ -223,6 +224,7 @@ def align_slit(
     yield from step_scan_and_move_fit(
         det=det,
         motor=slit.y_centre,
+        detname_suffix="value",
         start=start_pos,
         end=end_pos,
         fitted_loc=centre_type,

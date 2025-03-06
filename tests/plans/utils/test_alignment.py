@@ -78,6 +78,7 @@ async def test_scan_and_move_cen_success_with_gaussian(
             fake_detector,
             sim_motor_step.x,
             StatPosition.COM,
+            "value",
             start,
             end,
             num,
@@ -140,6 +141,7 @@ async def test_scan_and_move_cen_success_with_step(
             det=fake_detector,
             motor=sim_motor_step.x,
             start=start,
+            detname_suffix="value",
             end=end,
             num=num,
             fitted_loc=StatPosition.D_CEN,
@@ -174,6 +176,7 @@ async def test_scan_and_move_cen_fail_to_with_wrong_name(
             fast_scan_and_move_fit(
                 det=fake_detector,
                 motor=sim_motor_step.x,
+                detname_suffix="dsdfs",
                 start=-5,
                 end=5,
                 fitted_loc=StatPosition.CEN,
@@ -223,6 +226,7 @@ async def test_scan_and_move_cen_failed_with_no_peak_in_range(
             step_scan_and_move_fit(
                 det=fake_detector,
                 motor=sim_motor_step.x,
+                detname_suffix="value",
                 start=start,
                 end=end,
                 fitted_loc=StatPosition.CEN,
