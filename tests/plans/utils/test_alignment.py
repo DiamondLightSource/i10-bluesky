@@ -14,21 +14,15 @@ from i10_bluesky.plans.utils import (
     step_scan_and_move_fit,
 )
 from i10_bluesky.plans.utils.helpers import cal_range_num
-from sim_devices import sim_detector
+
+from ...math_function import gaussian
+from ...sim_devices import sim_detector
 
 docs = defaultdict(list)
 
 
 def capture_emitted(name, doc):
     docs[name].append(doc)
-
-
-def gaussian(x, mu, sig):
-    return (
-        1.0
-        / (np.sqrt(2.0 * np.pi) * sig)
-        * np.exp(-np.power((x - mu) / sig, 2.0) / 2.0)
-    )
 
 
 @pytest.mark.parametrize(

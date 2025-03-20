@@ -13,7 +13,7 @@ from p99_bluesky.plans.fast_scan import fast_scan_1d
 
 from i10_bluesky.log import LOGGER
 from i10_bluesky.plans.utils.helpers import cal_range_num
-from i10_bluesky.plans.utils.motors import MotorTable
+from i10_bluesky.plans.utils.motions import MotorTable
 
 
 class StatPosition(tuple, Enum):
