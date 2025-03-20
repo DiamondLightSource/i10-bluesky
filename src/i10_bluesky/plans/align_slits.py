@@ -14,14 +14,13 @@ from ophyd_async.core import StandardReadable
 from i10_bluesky.log import LOGGER
 from i10_bluesky.plans.configuration.default_setting import (
     RASOR_DEFAULT_DET,
-    RASOR_DEFAULT_DET_NAME_EXTENSION,
 )
 from i10_bluesky.plans.utils import (
-    PeakPosition,
+    StatPosition,
     align_slit_with_look_up,
     cal_range_num,
     move_motor_with_look_up,
-    step_scan_and_move_cen,
+    step_scan_and_move_fit,
 )
 
 """I10 has fix/solid slit on a motor, this store the rough motor opening
@@ -65,33 +64,30 @@ def move_dsd(
     )
 
 
-def align_dsu(
-    size: float, det: StandardReadable | None = None, det_name: str | None = None
-) -> MsgGenerator:
+def align_dsu(size: float, det: StandardReadable | None = None) -> MsgGenerator:
     if det is None:
-        det, det_name = get_rasor_default_det()
+        det = get_rasor_default_det()
     yield from align_slit_with_look_up(
         motor=det_slits().upstream,
         size=size,
         slit_table=DSU,
         det=det,
-        det_name=det_name,
-        centre_type=PeakPosition.COM,
+        centre_type=StatPosition.COM,
     )
 
 
 def align_dsd(
-    size: float, det: StandardReadable | None = None, det_name: str | None = None
+    size: float,
+    det: StandardReadable | None = None,
 ) -> MsgGenerator:
     if det is None:
-        det, det_name = get_rasor_default_det()
+        det = get_rasor_default_det()
     yield from align_slit_with_look_up(
         motor=det_slits().downstream,
         size=size,
         slit_table=DSD,
         det=det,
-        det_name=det_name,
-        centre_type=PeakPosition.COM,
+        centre_type=StatPosition.COM,
     )
 
 
@@ -101,9 +97,7 @@ def align_pa_slit(dsd_size: float, dsu_size: float) -> MsgGenerator:
     yield from align_dsd(dsd_size)
 
 
-def align_s5s6(
-    det: StandardReadable | None = None, det_name: str | None = None
-) -> MsgGenerator:
+def align_s5s6(det: StandardReadable | None = None) -> MsgGenerator:
     """
     Plan to align the s5s6 slits with the straight through beam
     and RASOR detector, it define where all the motor should be and call
@@ -118,7 +112,7 @@ def align_s5s6(
     """
 
     if det is None:
-        det, det_name = get_rasor_default_det()
+        det = get_rasor_default_det()
 
     slit = slits()
     yield from move_to_direct_beam_position()
@@ -136,7 +130,6 @@ def align_s5s6(
         y_open_size=4,
         y_range=2,
         y_cen=0,
-        det_name=det_name,
     )
     LOGGER.info("Aligning s6")
     yield from align_slit(
@@ -152,7 +145,6 @@ def align_s5s6(
         y_open_size=4,
         y_range=2,
         y_cen=0,
-        det_name=det_name,
     )
 
 
@@ -169,9 +161,7 @@ def align_slit(
     x_cen: float,
     y_range: float,
     y_cen: float,
-    det_name: str | None = None,
-    motor_name: str | None = "",
-    centre_type: PeakPosition = PeakPosition.COM,
+    centre_type: StatPosition = StatPosition.COM,
 ) -> MsgGenerator:
     """
     Plan to align a pair of standard x-y slits,
@@ -204,15 +194,9 @@ def align_slit(
         The y slit range.
     y_cen: float,
         The best guess of y slit centre.
-    det_name: str | None = None,
-        det_name is optional, it is used for indicate which signal to fit
-        when there are multiple HINTED_SIGNAL/non standard name.
-        It only add to the last part of the detector name if/when required.
-    motor_name: str | None = "",
-        The name of the motor, same as det_name.
-    centre_type: PeakPosition = PeakPosition.COM
+    centre_type: StatPosition = StatPosition.COM
         Where to move the slits, it goes to centre of mass by default.
-        see PeakPosition for other options.
+        see StatPosition for other options.
     """
     group_wait = "slits group"
     yield from abs_set(slit.x_gap, x_scan_size, group=group_wait)
@@ -221,15 +205,14 @@ def align_slit(
     yield from wait(group=group_wait)
     yield from mv(slit.y_centre, y_cen, group=group_wait)  # type: ignore
     start_pos, end_pos, num = cal_range_num(x_cen, x_range, x_scan_size)
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=slit.x_centre,
+        detname_suffix="value",
         start=start_pos,
         end=end_pos,
+        fitted_loc=centre_type,
         num=num,
-        det_name=det_name,
-        motor_name=motor_name,
-        loc=centre_type,
     )
 
     yield from abs_set(slit.y_gap, y_scan_size, group=group_wait)
@@ -237,14 +220,14 @@ def align_slit(
     LOGGER.info(f"Moving to starting position for {slit.y_centre.name} alignment.")
     yield from wait(group=group_wait)
     start_pos, end_pos, num = cal_range_num(y_cen, y_range, y_scan_size)
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=slit.y_centre,
+        detname_suffix="value",
         start=start_pos,
         end=end_pos,
+        fitted_loc=centre_type,
         num=num,
-        det_name=det_name,
-        loc=centre_type,
     )
     yield from abs_set(slit.x_gap, x_final_size, group=group_wait)
     yield from abs_set(slit.y_gap, y_final_size, group=group_wait)
@@ -262,8 +245,7 @@ def move_to_direct_beam_position() -> MsgGenerator:
     yield from wait(group=group_wait)
 
 
-def get_rasor_default_det() -> tuple[StandardReadable, str]:
+def get_rasor_default_det() -> StandardReadable:
     """Return default detector and its name."""
     det = RASOR_DEFAULT_DET
-    det_name = RASOR_DEFAULT_DET_NAME_EXTENSION
-    return det, det_name
+    return det

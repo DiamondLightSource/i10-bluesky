@@ -15,7 +15,7 @@ from i10_bluesky.plans.configuration.default_setting import (
     RASOR_DEFAULT_DET,
     RASOR_DEFAULT_DET_NAME_EXTENSION,
 )
-from i10_bluesky.plans.utils.alignments import PeakPosition
+from i10_bluesky.plans.utils.alignments import StatPosition
 
 from ..helper_functions import check_msg_set, check_msg_wait
 
@@ -26,66 +26,62 @@ def capture_emitted(name, doc):
     docs[name].append(doc)
 
 
-@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_cen")
+@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_fit")
 async def test_centre_tth(
-    fake_step_scan_and_move_cen: Mock,
+    fake_step_scan_and_move_fit: Mock,
     RE: RunEngine,
     fake_i10,
 ):
     RE(centre_tth(), docs)
-    fake_step_scan_and_move_cen.assert_called_once_with(
+    fake_step_scan_and_move_fit.assert_called_once_with(
         det=RASOR_DEFAULT_DET,
         motor=diffractometer().tth,
         start=-1,
         end=1,
         num=21,
-        motor_name=None,
-        det_name=RASOR_DEFAULT_DET_NAME_EXTENSION,
-        loc=PeakPosition.CEN,
+        detname_suffix=RASOR_DEFAULT_DET_NAME_EXTENSION,
+        fitted_loc=StatPosition.CEN,
     )
 
 
-@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_cen")
-async def test_centre_alpha(fake_step_scan_and_move_cen: Mock, RE: RunEngine, fake_i10):
+@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_fit")
+async def test_centre_alpha(fake_step_scan_and_move_fit: Mock, RE: RunEngine, fake_i10):
     RE(centre_alpha())
 
-    fake_step_scan_and_move_cen.assert_called_once_with(
+    fake_step_scan_and_move_fit.assert_called_once_with(
         det=RASOR_DEFAULT_DET,
         motor=diffractometer().alpha,
         start=-0.8,
         end=0.8,
         num=21,
-        motor_name=None,
-        det_name=RASOR_DEFAULT_DET_NAME_EXTENSION,
-        loc=PeakPosition.CEN,
+        detname_suffix=RASOR_DEFAULT_DET_NAME_EXTENSION,
+        fitted_loc=StatPosition.CEN,
     )
 
 
-@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_cen")
+@patch("i10_bluesky.plans.centre_direct_beam.step_scan_and_move_fit")
 async def test_centre_det_angles(
-    fake_step_scan_and_move_cen: Mock,
+    fake_step_scan_and_move_fit: Mock,
     RE: RunEngine,
 ):
     RE(centre_det_angles())
-    assert fake_step_scan_and_move_cen.call_args_list[0] == call(
+    assert fake_step_scan_and_move_fit.call_args_list[0] == call(
         det=RASOR_DEFAULT_DET,
         motor=diffractometer().tth,
         start=-1,
         end=1,
         num=21,
-        motor_name=None,
-        det_name=RASOR_DEFAULT_DET_NAME_EXTENSION,
-        loc=PeakPosition.CEN,
+        detname_suffix=RASOR_DEFAULT_DET_NAME_EXTENSION,
+        fitted_loc=StatPosition.CEN,
     )
-    assert fake_step_scan_and_move_cen.call_args_list[1] == call(
+    assert fake_step_scan_and_move_fit.call_args_list[1] == call(
         det=RASOR_DEFAULT_DET,
         motor=diffractometer().alpha,
         start=-0.8,
         end=0.8,
         num=21,
-        motor_name=None,
-        det_name=RASOR_DEFAULT_DET_NAME_EXTENSION,
-        loc=PeakPosition.CEN,
+        detname_suffix=RASOR_DEFAULT_DET_NAME_EXTENSION,
+        fitted_loc=StatPosition.CEN,
     )
 
 

@@ -12,7 +12,7 @@ from i10_bluesky.plans.configuration.default_setting import (
     RASOR_DEFAULT_DET,
     RASOR_DEFAULT_DET_NAME_EXTENSION,
 )
-from i10_bluesky.plans.utils.alignments import PeakPosition, step_scan_and_move_cen
+from i10_bluesky.plans.utils.alignments import StatPosition, step_scan_and_move_fit
 
 
 def centre_tth(
@@ -24,15 +24,14 @@ def centre_tth(
 ) -> MsgGenerator:
     """Centre two theta using Rasor dector."""
 
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=diffractometer().tth,
         start=start,
         end=end,
         num=num,
-        motor_name=None,
-        det_name=det_name,
-        loc=PeakPosition.CEN,
+        detname_suffix=det_name,
+        fitted_loc=StatPosition.CEN,
     )
 
 
@@ -44,15 +43,14 @@ def centre_alpha(
     num: int = 21,
 ) -> MsgGenerator:
     """Centre rasor alpha using Rasor dector."""
-    yield from step_scan_and_move_cen(
+    yield from step_scan_and_move_fit(
         det=det,
         motor=diffractometer().alpha,
         start=start,
         end=end,
         num=num,
-        motor_name=None,
-        det_name=det_name,
-        loc=PeakPosition.CEN,
+        detname_suffix=det_name,
+        fitted_loc=StatPosition.CEN,
     )
 
 

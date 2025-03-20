@@ -49,14 +49,14 @@ def test_move_dsd():
 @patch(
     "i10_bluesky.plans.align_slits.align_slit_with_look_up",
 )
-def test_align_pa_slit(fake_step_scan_and_move_cen: MagicMock):
+def test_align_pa_slit(fake_step_scan_and_move_fit: MagicMock):
     sim = RunEngineSimulator()
     msgs = sim.simulate_plan(align_pa_slit(dsd_size=50, dsu_size=50))
     msgs = check_msg_set(msgs=msgs, obj=det_slits().downstream, value=DSD["5000"])
     msgs = check_msg_wait(msgs=msgs, wait_group=ANY, wait=True)
 
     assert len(msgs) == 1
-    assert fake_step_scan_and_move_cen.call_count == 2
+    assert fake_step_scan_and_move_fit.call_count == 2
 
 
 @patch(
@@ -75,7 +75,7 @@ def test_align_s5s6(mock_align_slit: MagicMock):
 
 @patch("i10_bluesky.plans.align_slits.cal_range_num", return_value=[1, 1, 1])
 @patch(
-    "i10_bluesky.plans.align_slits.step_scan_and_move_cen",
+    "i10_bluesky.plans.align_slits.step_scan_and_move_fit",
 )
 @pytest.mark.parametrize(
     """x_scan_size, x_final_size, x_open_size, y_scan_size, y_final_size,
