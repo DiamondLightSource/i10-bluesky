@@ -16,9 +16,10 @@ dependencies = [
     #Things that are neeeded for running
     "blueapi",
     "ophyd",
-    "dls-dodal",
+    "dls-dodal@git+https://github.com/DiamondLightSource/dodal.git@949-make-ophyd-devices-for-the-diagonstics-for-i10",
     "ophyd-async",
     "bluesky",
+    "p99_bluesky",
 
 
     #usefull stuff for testing or running without blue api
@@ -97,6 +98,10 @@ addopts = """
 filterwarnings = "error"
 # Doctest python code in docs, python code in src docstrings, test functions in tests
 testpaths = "docs src tests"
+
+
+asyncio_mode = "auto"
+
 
 [tool.coverage.run]
 data_file = "/tmp/i10_bluesky.coverage"
