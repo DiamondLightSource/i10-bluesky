@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>i10_bluesky.plans.align_slits &#8212; i10_bluesky 0.0.0.5.dev48+g74024a2 documentation</title>
+    <title>i10_bluesky.plans.align_slits &#8212; i10_bluesky 0.0.0.5.dev62+g5c9f2cb documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=6c3230ba"></script>
+    <script src="../../../_static/documentation_options.js?v=b15bb8c3"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -458,14 +458,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">i10_bluesky.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOGGER</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">i10_bluesky.plans.configuration.default_setting</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">RASOR_DEFAULT_DET</span><span class="p">,</span>
-    <span class="n">RASOR_DEFAULT_DET_NAME_EXTENSION</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">i10_bluesky.plans.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">PeakPosition</span><span class="p">,</span>
+    <span class="n">StatPosition</span><span class="p">,</span>
     <span class="n">align_slit_with_look_up</span><span class="p">,</span>
     <span class="n">cal_range_num</span><span class="p">,</span>
     <span class="n">move_motor_with_look_up</span><span class="p">,</span>
-    <span class="n">step_scan_and_move_cen</span><span class="p">,</span>
+    <span class="n">step_scan_and_move_fit</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="sd">&quot;&quot;&quot;I10 has fix/solid slit on a motor, this store the rough motor opening</span>
@@ -519,40 +518,33 @@
 
 
 
-<div class="viewcode-block" id="align_dsu">
-<a class="viewcode-back" href="../../../_api/i10_bluesky.plans.html#i10_bluesky.plans.align_dsu">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">align_dsu</span><span class="p">(</span>
-    <span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">det_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Align the down stream detector slit&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">align_dsu</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">det</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">det</span><span class="p">,</span> <span class="n">det_name</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
+        <span class="n">det</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
     <span class="k">yield from</span> <span class="n">align_slit_with_look_up</span><span class="p">(</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">det_slits</span><span class="p">()</span><span class="o">.</span><span class="n">upstream</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
         <span class="n">slit_table</span><span class="o">=</span><span class="n">DSU</span><span class="p">,</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">centre_type</span><span class="o">=</span><span class="n">PeakPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
-    <span class="p">)</span></div>
-
+        <span class="n">centre_type</span><span class="o">=</span><span class="n">StatPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
+    <span class="p">)</span>
 
 
 <div class="viewcode-block" id="align_dsd">
 <a class="viewcode-back" href="../../../_api/i10_bluesky.plans.html#i10_bluesky.plans.align_dsd">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">align_dsd</span><span class="p">(</span>
-    <span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">det_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Align the up stream detector slit&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">det</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">det</span><span class="p">,</span> <span class="n">det_name</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
+        <span class="n">det</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
     <span class="k">yield from</span> <span class="n">align_slit_with_look_up</span><span class="p">(</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">det_slits</span><span class="p">()</span><span class="o">.</span><span class="n">downstream</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
         <span class="n">slit_table</span><span class="o">=</span><span class="n">DSD</span><span class="p">,</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">centre_type</span><span class="o">=</span><span class="n">PeakPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
+        <span class="n">centre_type</span><span class="o">=</span><span class="n">StatPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -564,9 +556,7 @@
     <span class="k">yield from</span> <span class="n">align_dsd</span><span class="p">(</span><span class="n">dsd_size</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">align_s5s6</span><span class="p">(</span>
-    <span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">det_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">align_s5s6</span><span class="p">(</span><span class="n">det</span><span class="p">:</span> <span class="n">StandardReadable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plan to align the s5s6 slits with the straight through beam</span>
 <span class="sd">    and RASOR detector, it define where all the motor should be and call</span>
@@ -581,7 +571,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">det</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">det</span><span class="p">,</span> <span class="n">det_name</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
+        <span class="n">det</span> <span class="o">=</span> <span class="n">get_rasor_default_det</span><span class="p">()</span>
 
     <span class="n">slit</span> <span class="o">=</span> <span class="n">slits</span><span class="p">()</span>
     <span class="k">yield from</span> <span class="n">move_to_direct_beam_position</span><span class="p">()</span>
@@ -599,7 +589,6 @@
         <span class="n">y_open_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
         <span class="n">y_range</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">y_cen</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Aligning s6&quot;</span><span class="p">)</span>
     <span class="k">yield from</span> <span class="n">align_slit</span><span class="p">(</span>
@@ -615,7 +604,6 @@
         <span class="n">y_open_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
         <span class="n">y_range</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">y_cen</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
     <span class="p">)</span>
 
 
@@ -632,9 +620,7 @@
     <span class="n">x_cen</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">y_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">y_cen</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">det_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">motor_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="n">centre_type</span><span class="p">:</span> <span class="n">PeakPosition</span> <span class="o">=</span> <span class="n">PeakPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
+    <span class="n">centre_type</span><span class="p">:</span> <span class="n">StatPosition</span> <span class="o">=</span> <span class="n">StatPosition</span><span class="o">.</span><span class="n">COM</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plan to align a pair of standard x-y slits,</span>
@@ -667,15 +653,9 @@
 <span class="sd">        The y slit range.</span>
 <span class="sd">    y_cen: float,</span>
 <span class="sd">        The best guess of y slit centre.</span>
-<span class="sd">    det_name: str | None = None,</span>
-<span class="sd">        det_name is optional, it is used for indicate which signal to fit</span>
-<span class="sd">        when there are multiple HINTED_SIGNAL/non standard name.</span>
-<span class="sd">        It only add to the last part of the detector name if/when required.</span>
-<span class="sd">    motor_name: str | None = &quot;&quot;,</span>
-<span class="sd">        The name of the motor, same as det_name.</span>
-<span class="sd">    centre_type: PeakPosition = PeakPosition.COM</span>
+<span class="sd">    centre_type: StatPosition = StatPosition.COM</span>
 <span class="sd">        Where to move the slits, it goes to centre of mass by default.</span>
-<span class="sd">        see PeakPosition for other options.</span>
+<span class="sd">        see StatPosition for other options.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">group_wait</span> <span class="o">=</span> <span class="s2">&quot;slits group&quot;</span>
     <span class="k">yield from</span> <span class="n">abs_set</span><span class="p">(</span><span class="n">slit</span><span class="o">.</span><span class="n">x_gap</span><span class="p">,</span> <span class="n">x_scan_size</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
@@ -684,15 +664,14 @@
     <span class="k">yield from</span> <span class="n">wait</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
     <span class="k">yield from</span> <span class="n">mv</span><span class="p">(</span><span class="n">slit</span><span class="o">.</span><span class="n">y_centre</span><span class="p">,</span> <span class="n">y_cen</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
     <span class="n">start_pos</span><span class="p">,</span> <span class="n">end_pos</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="n">cal_range_num</span><span class="p">(</span><span class="n">x_cen</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">x_scan_size</span><span class="p">)</span>
-    <span class="k">yield from</span> <span class="n">step_scan_and_move_cen</span><span class="p">(</span>
+    <span class="k">yield from</span> <span class="n">step_scan_and_move_fit</span><span class="p">(</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">slit</span><span class="o">.</span><span class="n">x_centre</span><span class="p">,</span>
+        <span class="n">detname_suffix</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
         <span class="n">start</span><span class="o">=</span><span class="n">start_pos</span><span class="p">,</span>
         <span class="n">end</span><span class="o">=</span><span class="n">end_pos</span><span class="p">,</span>
+        <span class="n">fitted_loc</span><span class="o">=</span><span class="n">centre_type</span><span class="p">,</span>
         <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">motor_name</span><span class="o">=</span><span class="n">motor_name</span><span class="p">,</span>
-        <span class="n">loc</span><span class="o">=</span><span class="n">centre_type</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">yield from</span> <span class="n">abs_set</span><span class="p">(</span><span class="n">slit</span><span class="o">.</span><span class="n">y_gap</span><span class="p">,</span> <span class="n">y_scan_size</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
@@ -700,14 +679,14 @@
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving to starting position for </span><span class="si">{</span><span class="n">slit</span><span class="o">.</span><span class="n">y_centre</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> alignment.&quot;</span><span class="p">)</span>
     <span class="k">yield from</span> <span class="n">wait</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
     <span class="n">start_pos</span><span class="p">,</span> <span class="n">end_pos</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="n">cal_range_num</span><span class="p">(</span><span class="n">y_cen</span><span class="p">,</span> <span class="n">y_range</span><span class="p">,</span> <span class="n">y_scan_size</span><span class="p">)</span>
-    <span class="k">yield from</span> <span class="n">step_scan_and_move_cen</span><span class="p">(</span>
+    <span class="k">yield from</span> <span class="n">step_scan_and_move_fit</span><span class="p">(</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">slit</span><span class="o">.</span><span class="n">y_centre</span><span class="p">,</span>
+        <span class="n">detname_suffix</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
         <span class="n">start</span><span class="o">=</span><span class="n">start_pos</span><span class="p">,</span>
         <span class="n">end</span><span class="o">=</span><span class="n">end_pos</span><span class="p">,</span>
+        <span class="n">fitted_loc</span><span class="o">=</span><span class="n">centre_type</span><span class="p">,</span>
         <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">loc</span><span class="o">=</span><span class="n">centre_type</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">yield from</span> <span class="n">abs_set</span><span class="p">(</span><span class="n">slit</span><span class="o">.</span><span class="n">x_gap</span><span class="p">,</span> <span class="n">x_final_size</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
     <span class="k">yield from</span> <span class="n">abs_set</span><span class="p">(</span><span class="n">slit</span><span class="o">.</span><span class="n">y_gap</span><span class="p">,</span> <span class="n">y_final_size</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
@@ -725,11 +704,10 @@
     <span class="k">yield from</span> <span class="n">wait</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group_wait</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">get_rasor_default_det</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">StandardReadable</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_rasor_default_det</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">StandardReadable</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return default detector and its name.&quot;&quot;&quot;</span>
     <span class="n">det</span> <span class="o">=</span> <span class="n">RASOR_DEFAULT_DET</span>
-    <span class="n">det_name</span> <span class="o">=</span> <span class="n">RASOR_DEFAULT_DET_NAME_EXTENSION</span>
-    <span class="k">return</span> <span class="n">det</span><span class="p">,</span> <span class="n">det_name</span>
+    <span class="k">return</span> <span class="n">det</span>
 </pre></div>
 
                 </article>

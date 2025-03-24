@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>i10_bluesky.plans.centre_direct_beam &#8212; i10_bluesky 0.0.0.5.dev48+g74024a2 documentation</title>
+    <title>i10_bluesky.plans.centre_direct_beam &#8212; i10_bluesky 0.0.0.5.dev62+g5c9f2cb documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=6c3230ba"></script>
+    <script src="../../../_static/documentation_options.js?v=b15bb8c3"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -456,7 +456,7 @@
     <span class="n">RASOR_DEFAULT_DET</span><span class="p">,</span>
     <span class="n">RASOR_DEFAULT_DET_NAME_EXTENSION</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">i10_bluesky.plans.utils.alignments</span><span class="w"> </span><span class="kn">import</span> <span class="n">PeakPosition</span><span class="p">,</span> <span class="n">step_scan_and_move_cen</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">i10_bluesky.plans.utils.alignments</span><span class="w"> </span><span class="kn">import</span> <span class="n">StatPosition</span><span class="p">,</span> <span class="n">step_scan_and_move_fit</span>
 
 
 <div class="viewcode-block" id="centre_tth">
@@ -470,15 +470,14 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Centre two theta using Rasor dector.&quot;&quot;&quot;</span>
 
-    <span class="k">yield from</span> <span class="n">step_scan_and_move_cen</span><span class="p">(</span>
+    <span class="k">yield from</span> <span class="n">step_scan_and_move_fit</span><span class="p">(</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">diffractometer</span><span class="p">()</span><span class="o">.</span><span class="n">tth</span><span class="p">,</span>
         <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
         <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
         <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span>
-        <span class="n">motor_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">loc</span><span class="o">=</span><span class="n">PeakPosition</span><span class="o">.</span><span class="n">CEN</span><span class="p">,</span>
+        <span class="n">detname_suffix</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
+        <span class="n">fitted_loc</span><span class="o">=</span><span class="n">StatPosition</span><span class="o">.</span><span class="n">CEN</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -493,15 +492,14 @@
     <span class="n">num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">21</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MsgGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Centre rasor alpha using Rasor dector.&quot;&quot;&quot;</span>
-    <span class="k">yield from</span> <span class="n">step_scan_and_move_cen</span><span class="p">(</span>
+    <span class="k">yield from</span> <span class="n">step_scan_and_move_fit</span><span class="p">(</span>
         <span class="n">det</span><span class="o">=</span><span class="n">det</span><span class="p">,</span>
         <span class="n">motor</span><span class="o">=</span><span class="n">diffractometer</span><span class="p">()</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
         <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
         <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
         <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span>
-        <span class="n">motor_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">det_name</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
-        <span class="n">loc</span><span class="o">=</span><span class="n">PeakPosition</span><span class="o">.</span><span class="n">CEN</span><span class="p">,</span>
+        <span class="n">detname_suffix</span><span class="o">=</span><span class="n">det_name</span><span class="p">,</span>
+        <span class="n">fitted_loc</span><span class="o">=</span><span class="n">StatPosition</span><span class="o">.</span><span class="n">CEN</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
