@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>i10_bluesky.plans &#8212; i10_bluesky 0.0.0.5.dev63+gab18f69 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7b2d4443"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_api/i10_bluesky.plans';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://DiamondLightSource.github.io/i10-bluesky/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/dls-logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="i10_bluesky.utils" href="i10_bluesky.utils.html" />
+    <link rel="prev" title="i10_bluesky" href="i10_bluesky.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="main" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/dls-logo.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/dls-logo.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">i10_bluesky</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/i10-bluesky" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/i10_bluesky" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/i10-bluesky" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/i10_bluesky" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="i10_bluesky.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">i10_bluesky.plans</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="i10_bluesky.utils.html"><code class="docutils literal notranslate"><span class="pre">i10_bluesky.utils</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/DiamondLightSource/i10_bluesky/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="i10_bluesky.html" class="nav-link"><code class="docutils literal notranslate"><span class="pre">i10_bluesky</span></code></a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><code class="docutils literal notranslate"><span class="pre">i10_bluesky.plans</span></code></span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-i10_bluesky.plans">
+<span id="i10-bluesky-plans"></span><h1><code class="docutils literal notranslate"><span class="pre">i10_bluesky.plans</span></code><a class="headerlink" href="#module-i10_bluesky.plans" title="Link to this heading">#</a></h1>
+<p>Bluesky plans for beamline I10.</p>
+<p class="rubric">Members</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.align_dsd" title="i10_bluesky.plans.align_dsd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">align_dsd</span></code></a></p></td>
+<td><p>Align the up stream detector slit</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">align_dsu</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.move_dsd" title="i10_bluesky.plans.move_dsd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_dsd</span></code></a></p></td>
+<td><p>Move down stream detector slit either by it size in slit motor table or by motor position.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#i10_bluesky.plans.move_dsu" title="i10_bluesky.plans.move_dsu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_dsu</span></code></a></p></td>
+<td><p>Move up stream detector slit either by it size in slit motor table or by motor position.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.direct_beam_polan" title="i10_bluesky.plans.direct_beam_polan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">direct_beam_polan</span></code></a></p></td>
+<td><p>Move polarization analyzer out of the way of the beam.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#i10_bluesky.plans.clear_beam_path" title="i10_bluesky.plans.clear_beam_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_beam_path</span></code></a></p></td>
+<td><p>Move everything out of the way of the direct beam</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.open_dsd_dsu" title="i10_bluesky.plans.open_dsd_dsu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_dsd_dsu</span></code></a></p></td>
+<td><p>Remove both detector slits</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#i10_bluesky.plans.open_s5s6" title="i10_bluesky.plans.open_s5s6"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_s5s6</span></code></a></p></td>
+<td><p>Open up clean up slits s5 and s6.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.remove_pin_hole" title="i10_bluesky.plans.remove_pin_hole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_pin_hole</span></code></a></p></td>
+<td><p>Move pin hole out of the way of the pin</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#i10_bluesky.plans.centre_alpha" title="i10_bluesky.plans.centre_alpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">centre_alpha</span></code></a></p></td>
+<td><p>Centre rasor alpha using Rasor dector.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.centre_tth" title="i10_bluesky.plans.centre_tth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">centre_tth</span></code></a></p></td>
+<td><p>Centre two theta using Rasor dector.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#i10_bluesky.plans.centre_det_angles" title="i10_bluesky.plans.centre_det_angles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">centre_det_angles</span></code></a></p></td>
+<td><p>Centre both two theta and alpha angle on Rasor</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#i10_bluesky.plans.move_pin_origin" title="i10_bluesky.plans.move_pin_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_pin_origin</span></code></a></p></td>
+<td><p>Move the point to the centre of rotation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.align_dsd">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">align_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">det</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StandardReadable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/align_slits.html#align_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.align_dsd" title="Link to this definition">#</a></dt>
+<dd><p>Align the up stream detector slit</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.move_dsd">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">move_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">slit_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'100':</span> <span class="pre">29.3,</span> <span class="pre">'1000':</span> <span class="pre">19.3,</span> <span class="pre">'50':</span> <span class="pre">34.3,</span> <span class="pre">'500':</span> <span class="pre">26.5,</span> <span class="pre">'5000':</span> <span class="pre">14.3}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_motor_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/align_slits.html#move_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.move_dsd" title="Link to this definition">#</a></dt>
+<dd><p>Move down stream detector slit either by it size in slit motor table or by motor
+position.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.move_dsu">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">move_dsu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">slit_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'100':</span> <span class="pre">31.7,</span> <span class="pre">'1000':</span> <span class="pre">21.7,</span> <span class="pre">'50':</span> <span class="pre">36.7,</span> <span class="pre">'500':</span> <span class="pre">25.674,</span> <span class="pre">'5000':</span> <span class="pre">16.7}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_motor_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/align_slits.html#move_dsu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.move_dsu" title="Link to this definition">#</a></dt>
+<dd><p>Move up stream detector slit either by it size in slit motor table or by motor
+position.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.direct_beam_polan">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">direct_beam_polan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/open_beam_path.html#direct_beam_polan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.direct_beam_polan" title="Link to this definition">#</a></dt>
+<dd><p>Move polarization analyzer out of the way of the beam.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If this is true it will wait until all motions are done.</p></li>
+<li><p><strong>group</strong> (<em>Hashable</em>) – If given this will be the group name that pass along to bluesky, which
+can be use at a later time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.clear_beam_path">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">clear_beam_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/open_beam_path.html#clear_beam_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.clear_beam_path" title="Link to this definition">#</a></dt>
+<dd><p>Move everything out of the way of the direct beam</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If this is true it will wait until all motions are done.</p></li>
+<li><p><strong>group</strong> (<em>Hashable</em>) – If given this will be the group name that pass along to bluesky, which
+can be use at a later time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.open_dsd_dsu">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">open_dsd_dsu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">open_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/open_beam_path.html#open_dsd_dsu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.open_dsd_dsu" title="Link to this definition">#</a></dt>
+<dd><p>Remove both detector slits</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>open_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The position of the opening.</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If this is true it will wait until all motions are done.</p></li>
+<li><p><strong>group</strong> (<em>Hashable</em>) – If given this will be the group name that pass along to bluesky, which
+can be use at a later time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.open_s5s6">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">open_s5s6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/open_beam_path.html#open_s5s6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.open_s5s6" title="Link to this definition">#</a></dt>
+<dd><p>Open up clean up slits s5 and s6.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The size of their opening both x and y will set to the same value.</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If this is true it will set both slits to move and wait until it get to position
+.</p></li>
+<li><p><strong>group</strong> (<em>Hashable</em>) – If given this will be the group name that pass along to bluesky, which
+can be use at a later time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.remove_pin_hole">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">remove_pin_hole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">open_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">69</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/open_beam_path.html#remove_pin_hole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.remove_pin_hole" title="Link to this definition">#</a></dt>
+<dd><p>Move pin hole out of the way of the pin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>open_position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The position of the opening.</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If this is true it will wait until all motions are done.</p></li>
+<li><p><strong>group</strong> (<em>Hashable</em>) – If given this will be the group name that pass along to bluesky, which
+can be use at a later time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.centre_alpha">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">centre_alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">det:</span> <span class="pre">~ophyd_async.core._readable.StandardReadable</span> <span class="pre">=</span> <span class="pre">&lt;dodal.devices.current_amplifiers.current_amplifier_detector.CurrentAmpDet</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">det_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'-current'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">21</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/centre_direct_beam.html#centre_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.centre_alpha" title="Link to this definition">#</a></dt>
+<dd><p>Centre rasor alpha using Rasor dector.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.centre_tth">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">centre_tth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">det:</span> <span class="pre">~ophyd_async.core._readable.StandardReadable</span> <span class="pre">=</span> <span class="pre">&lt;dodal.devices.current_amplifiers.current_amplifier_detector.CurrentAmpDet</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">det_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'-current'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">21</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/centre_direct_beam.html#centre_tth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.centre_tth" title="Link to this definition">#</a></dt>
+<dd><p>Centre two theta using Rasor dector.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.centre_det_angles">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">centre_det_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">det:</span> <span class="pre">~ophyd_async.core._readable.StandardReadable</span> <span class="pre">=</span> <span class="pre">&lt;dodal.devices.current_amplifiers.current_amplifier_detector.CurrentAmpDet</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">det_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'-current'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/centre_direct_beam.html#centre_det_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.centre_det_angles" title="Link to this definition">#</a></dt>
+<dd><p>Centre both two theta and alpha angle on Rasor</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="i10_bluesky.plans.move_pin_origin">
+<span class="sig-prename descclassname"><span class="pre">i10_bluesky.plans.</span></span><span class="sig-name descname"><span class="pre">move_pin_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Hashable" title="(in Python v3.13)"><span class="pre">Hashable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Msg</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">P</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/i10_bluesky/plans/centre_direct_beam.html#move_pin_origin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#i10_bluesky.plans.move_pin_origin" title="Link to this definition">#</a></dt>
+<dd><p>Move the point to the centre of rotation.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="i10_bluesky.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">i10_bluesky</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="i10_bluesky.utils.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">i10_bluesky.utils</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.align_dsd"><code class="docutils literal notranslate"><span class="pre">align_dsd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.move_dsd"><code class="docutils literal notranslate"><span class="pre">move_dsd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.move_dsu"><code class="docutils literal notranslate"><span class="pre">move_dsu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.direct_beam_polan"><code class="docutils literal notranslate"><span class="pre">direct_beam_polan()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.clear_beam_path"><code class="docutils literal notranslate"><span class="pre">clear_beam_path()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.open_dsd_dsu"><code class="docutils literal notranslate"><span class="pre">open_dsd_dsu()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.open_s5s6"><code class="docutils literal notranslate"><span class="pre">open_s5s6()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.remove_pin_hole"><code class="docutils literal notranslate"><span class="pre">remove_pin_hole()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.centre_alpha"><code class="docutils literal notranslate"><span class="pre">centre_alpha()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.centre_tth"><code class="docutils literal notranslate"><span class="pre">centre_tth()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.centre_det_angles"><code class="docutils literal notranslate"><span class="pre">centre_det_angles()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i10_bluesky.plans.move_pin_origin"><code class="docutils literal notranslate"><span class="pre">move_pin_origin()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/DiamondLightSource/i10-bluesky/edit/main/docs/_api/i10_bluesky.plans.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_api/i10_bluesky.plans.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

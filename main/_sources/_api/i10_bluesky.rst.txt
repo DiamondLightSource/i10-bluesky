@@ -6,6 +6,16 @@
 
     
     
+    .. rubric:: Submodules
+
+    .. autosummary::
+        :toctree:
+        :template: custom-module-template.rst
+        :recursive:
+    
+        plans
+        utils
+    
     
 
     
