@@ -1,3 +1,5 @@
+"""Plans here more general or less completed."""
+
 from .alignments import (
     StatPosition,
     align_slit_with_look_up,

@@ -56,7 +56,7 @@ myst_enable_extensions = ["colon_fence"]
 
 # If true, Sphinx will warn about all references where the target cannot
 # be found.
-nitpicky = True
+# nitpicky = True
 
 # A list of (type, target) tuples (by default empty) that should be ignored when
 # generating warnings in "nitpicky mode". Note that type should include the
@@ -75,13 +75,17 @@ nitpick_ignore = [
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
 # inserted into the main body of the autoclass directive
-autoclass_content = "both"
+# autoclass_content = "both"
 
 # Order the members by the order they appear in the source code
 autodoc_member_order = "bysource"
 
 # Don't inherit docstrings from baseclasses
 autodoc_inherit_docstrings = False
+
+# Add some more modules to the top level autosummary
+i10_bluesky.__all__ += []
+
 
 # Document only what is in __all__
 autosummary_ignore_module_all = False

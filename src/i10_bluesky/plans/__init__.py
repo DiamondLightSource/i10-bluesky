@@ -1,3 +1,5 @@
+"""Bluesky plans for beamline I10."""
+
 from .align_slits import align_dsd, align_dsu, move_dsd, move_dsu
 from .centre_direct_beam import (
     centre_alpha,
@@ -5,8 +7,6 @@ from .centre_direct_beam import (
     centre_tth,
     move_pin_origin,
 )
-
-# from .centre_direct_beam import clear_beam_path
 from .open_beam_path import (
     clear_beam_path,
     direct_beam_polan,

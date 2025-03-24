@@ -45,6 +45,7 @@ def open_dsd_dsu(
     group: Hashable | None = None,
 ) -> MsgGenerator:
     """Remove both detector slits
+
     Parameters
     ----------
     open_position: float
@@ -72,6 +73,7 @@ def remove_pin_hole(
     group: Hashable | None = None,
 ) -> MsgGenerator:
     """Move pin hole out of the way of the pin
+
     Parameters
     ----------
     open_position: float
@@ -92,8 +94,8 @@ def remove_pin_hole(
 
 
 def direct_beam_polan(wait: bool = True, group: Hashable | None = None) -> MsgGenerator:
-    """
-    Move polarization analyzer out of the way of the beam.
+    """Move polarization analyzer out of the way of the beam.
+
     Parameters
     ----------
     wait: bool
@@ -116,6 +118,7 @@ def direct_beam_polan(wait: bool = True, group: Hashable | None = None) -> MsgGe
 
 def clear_beam_path(wait: bool = True, group: Hashable | None = None) -> MsgGenerator:
     """Move everything out of the way of the direct beam
+
     Parameters
     ----------
     wait: bool

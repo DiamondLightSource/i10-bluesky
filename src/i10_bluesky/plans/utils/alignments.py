@@ -18,12 +18,12 @@ from i10_bluesky.plans.utils.motions import MotorTable
 
 class StatPosition(tuple, Enum):
     """
-    Data table to help access the fit data.
-    Com: Centre of mass
-    CEN: Peak position
-    MIN: Minimum value
-    MAX: Maximum value
-    D_: Differential
+    Data table to help access the fit data.\n
+    Com: Centre of mass\n
+    CEN: Peak position\n
+    MIN: Minimum value\n
+    MAX: Maximum value\n
+    D: Differential\n
     """
 
     COM = ("stats", "com")
@@ -97,7 +97,7 @@ def step_scan_and_move_fit(
     """Does a step scan and move to the fitted position
     Parameters
     ----------
-    det: StandardReadable,
+    det: StandardReadable
         Detector to be use for alignment.
     motor: Motor
         Motor devices that is being centre.
@@ -107,7 +107,7 @@ def step_scan_and_move_fit(
         Name of the fitted axis within the detector
     start: float,
         Starting position for the scan.
-    end: float,
+    end: float
         Ending position for the scan.
     num:int
         Number of step.
@@ -129,7 +129,8 @@ def fast_scan_and_move_fit(
     end: float,
     motor_speed: float | None = None,
 ) -> MsgGenerator:
-    """Does a fast non-stopping scan and move to the fitted position
+    """Does a fast non-stopping scan and move to the fitted position.
+
     Parameters
     ----------
     det: StandardReadable,
@@ -181,6 +182,7 @@ def align_slit_with_look_up(
     """Perform a step scan with the the range and starting motor position
       given/calculated by using a look up table(dictionary).
       Move to the peak position after the scan and update the lookup table.
+
     Parameters
     ----------
     motor: Motor

@@ -25,20 +25,21 @@ def move_motor_with_look_up(
     """Perform a step scan with the the range and starting motor position
       given/calculated by using a look up table(dictionary).
       Move to the peak position after the scan and update the lookup table.
+
     Parameters
     ----------
     motor: Motor
         Motor devices that is being centre.
-    size: float,
+    size: float
         The size/name in the motor_table.
     slit_table: dict[str, float],
         Look up table for motor position, the str part should be the size of
         the slit in um.
     det: StandardReadable,
         Detector to be use for alignment.
-    det_name: str | None = None,
+    det_name: str | None
         Name extension for the det.
-    motor_name: str | None = None,
+    motor_name: str | None
         Name extension for the motor.
     centre_type: StatPosition | None = None,
         Which fitted position to move to see StatPosition.
@@ -61,7 +62,7 @@ def set_slit_size(
     wait: bool = True,
     group: Hashable | None = None,
 ) -> MsgGenerator:
-    """Set opening of an x-y slit.
+    """Set opening of x-y slit.
 
     Parameters
     ----------
