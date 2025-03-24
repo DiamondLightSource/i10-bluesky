@@ -22,9 +22,9 @@
     .. autosummary::
         :nosignatures:
     
-        fast_scan_and_move_cen
-        step_scan_and_move_cen
-        PeakPosition
+        fast_scan_and_move_fit
+        step_scan_and_move_fit
+        StatPosition
         move_motor_with_look_up
         align_slit_with_look_up
         cal_range_num
