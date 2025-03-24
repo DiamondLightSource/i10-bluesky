@@ -5,7 +5,7 @@ from .alignments import (
     step_scan_and_move_fit,
 )
 from .helpers import cal_range_num
-from .motors import move_motor_with_look_up
+from .motions import move_motor_with_look_up, set_slit_size
 
 __all__ = [
     "fast_scan_and_move_fit",
@@ -14,4 +14,5 @@ __all__ = [
     "move_motor_with_look_up",
     "align_slit_with_look_up",
     "cal_range_num",
+    "set_slit_size",
 ]

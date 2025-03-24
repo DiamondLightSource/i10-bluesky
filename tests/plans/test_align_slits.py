@@ -2,7 +2,7 @@ from collections import defaultdict
 from unittest.mock import ANY, MagicMock, patch
 
 import pytest
-from bluesky.simulators import RunEngineSimulator, assert_message_and_return_remaining
+from bluesky.simulators import RunEngineSimulator
 from dodal.beamlines.i10 import (
     det_slits,
     diffractometer,
@@ -20,6 +20,8 @@ from i10_bluesky.plans.align_slits import (
     move_dsd,
     move_dsu,
 )
+
+from ..helper_functions import check_msg_set, check_msg_wait, check_mv_wait
 
 docs = defaultdict(list)
 
@@ -130,33 +132,3 @@ def test_align_slit(
     assert len(msgs) == 1
     assert mock_step_scan.call_count == 2
     assert mock_cal_range.call_count == 2
-
-
-def check_msg_set(msgs, obj, value):
-    return assert_message_and_return_remaining(
-        msgs,
-        lambda msg: msg.command == "set" and msg.obj is obj and msg.args[0] == value,
-    )
-
-
-def check_msg_wait(msgs, wait_group, wait=False):
-    wait_msg = (
-        {"group": wait_group}
-        if wait
-        else {"group": wait_group, "error_on_timeout": True, "timeout": None}
-    )
-    return assert_message_and_return_remaining(
-        msgs,
-        lambda msg: msg.command == "wait"
-        and msg.obj is None
-        and msg.kwargs == wait_msg,
-    )
-
-
-def check_mv_wait(msgs, wait_group):
-    return assert_message_and_return_remaining(
-        msgs,
-        lambda msg: msg.command == "wait"
-        and msg.obj is None
-        and msg.kwargs == {"group": wait_group},
-    )

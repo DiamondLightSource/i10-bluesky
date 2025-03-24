@@ -4,7 +4,6 @@ from bluesky.plan_stubs import abs_set, mv, wait
 from dodal.beamlines.i10 import (
     det_slits,
     diffractometer,
-    rasor_femto_pa_scaler_det,
     simple_stage,
     slits,
 )
@@ -13,6 +12,9 @@ from dodal.devices.slits import Slits
 from ophyd_async.core import StandardReadable
 
 from i10_bluesky.log import LOGGER
+from i10_bluesky.plans.configuration.default_setting import (
+    RASOR_DEFAULT_DET,
+)
 from i10_bluesky.plans.utils import (
     StatPosition,
     align_slit_with_look_up,
@@ -26,9 +28,6 @@ from i10_bluesky.plans.utils import (
 
 DSD = {"5000": 14.3, "1000": 19.3, "500": 26.5, "100": 29.3, "50": 34.3}
 DSU = {"5000": 16.7, "1000": 21.7, "500": 25.674, "100": 31.7, "50": 36.7}
-
-RASOR_DEFAULT_DET = rasor_femto_pa_scaler_det()
-RASOR_DEFAULT_DET_NAME_EXTENSION = "-current"
 
 
 def move_dsu(
@@ -163,7 +162,7 @@ def align_slit(
     y_range: float,
     y_cen: float,
     centre_type: StatPosition = StatPosition.COM,
-):
+) -> MsgGenerator:
     """
     Plan to align a pair of standard x-y slits,
     it does a pair of slits scan and go to the centre of mass by default.
@@ -235,7 +234,7 @@ def align_slit(
     yield from wait(group=group_wait)
 
 
-def move_to_direct_beam_position():
+def move_to_direct_beam_position() -> MsgGenerator:
     """Remove everything in the way of the beam"""
     diff = diffractometer()
     s_stage = simple_stage()

@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 from bluesky.run_engine import RunEngine
+from dodal.utils import make_all_devices
 from ophyd_async.core import (
     FilenameProvider,
     StaticFilenameProvider,
@@ -14,7 +15,7 @@ from p99_bluesky.devices.stages import ThreeAxisStage
 from p99_bluesky.sim.sim_stages import SimThreeAxisStage
 from super_state_machine.errors import TransitionError
 
-from sim_devices import sim_detector
+from .sim_devices import sim_detector
 
 RECORD = str(Path(__file__).parent / "panda" / "db" / "panda.db")
 INCOMPLETE_BLOCK_RECORD = str(
@@ -117,3 +118,11 @@ async def fake_detector():
         fake_detector = sim_detector(prefix="fake_Pv", name="fake_detector")
     set_mock_value(fake_detector.value, 0)
     yield fake_detector
+
+
+@pytest.fixture
+async def fake_i10():
+    fake_i10, _ = make_all_devices(
+        "dodal.beamlines.i10", connect_immediately=True, mock=True
+    )
+    yield fake_i10
