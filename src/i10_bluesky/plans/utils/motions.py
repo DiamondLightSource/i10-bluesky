@@ -41,8 +41,8 @@ def move_motor_with_look_up(
         Name extension for the det.
     motor_name: str | None
         Name extension for the motor.
-    centre_type: PeakPosition | None
-        Which fitted position to move to see PeakPosition.
+    centre_type: StatPosition | None = None,
+        Which fitted position to move to see StatPosition.
     """
     MotorTable.model_validate(motor_table)
     if use_motor_position:
